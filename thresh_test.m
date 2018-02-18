@@ -13,3 +13,6 @@ cols = 2;
 % subplot(rows, cols, 2), imagesc(g_img);
 figure
 imagesc(g_img);
+
+figure
+imshow(roads{4});

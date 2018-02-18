@@ -1,11 +1,10 @@
 function [img, roads] = find_roads_mthresh(mimg)
 %% smooth
-% h = fspecial('average', 3);
-% img = imfilter(mimg, h);
+img = imsharpen(mimg);
 
 %% thresh
-mthresh = multithresh(mimg, 3); % separates into 4 parts
-img = imquantize(mimg, mthresh);
+mthresh = multithresh(img, 3); % separates into 4 parts
+img = imquantize(img, mthresh);
 
 %% morph 
 se = strel('disk', 5);
