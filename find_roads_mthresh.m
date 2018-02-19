@@ -7,8 +7,8 @@ mthresh = multithresh(img, 3); % separates into 4 parts
 img = imquantize(img, mthresh);
 
 %% morph 
-se = strel('disk', 5);
-img = imclose(img, se);
+% se = strel('disk', 3);
+% img = imclose(img, se);
 
 %% find roads
 comps = cell(4,1);

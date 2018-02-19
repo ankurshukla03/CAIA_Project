@@ -1,6 +1,6 @@
 close all;
 %% open 
-img = imread('02.png');
+img = imread('imgs/city.png');
 g_img = rgb2gray(img);
 
 [g_img, roads] = find_roads_mthresh(g_img);
