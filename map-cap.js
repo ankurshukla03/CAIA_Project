@@ -1,6 +1,7 @@
 const debug = false;
 const Nightmare = require('nightmare');
 
+const burgerButton = '.searchbox-hamburger';
 const satButton = '.widget-settings-button:nth-child(2)';
 
 /*
@@ -21,15 +22,17 @@ function mapCap(lat, long, alt, fname, callback=defaultCallback, test_collect=fa
   return (nightmare
     .viewport(1100, 700)
     .goto(url)
-    .wait(4000)
-    .click('.searchbox-hamburger')
+    .wait(5000)
+    .wait(burgerButton)
+    .click(burgerButton)
     .wait(satButton)
     .click(satButton)
-    .wait(1500)
+    .wait(2000)
     .screenshot(`./${fname}`, {x:100, y:100, width:900, height:455})
     .end(callback)
     .catch(error => {
       console.error('Something failed:', error);
+      callback();
     })
   );
 };

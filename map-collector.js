@@ -30,12 +30,13 @@ function padleft(val) {
 }
 
 function range(val) {
+  val = val.sort();
   return val[1] - val[0];
 }
 
 function randcoord(src, to) {
-  var latRange  = [src[0], to[0]].sort();
-  var longRange = [src[1], to[1]].sort();
+  var latRange  = [src[0], to[0]];
+  var longRange = [src[1], to[1]];
 
   var randLat  = (Math.random() * range(latRange) + latRange[0]).toFixed(7);
   var randLong = (Math.random() * range(longRange) + longRange[0]).toFixed(7);
@@ -43,17 +44,17 @@ function randcoord(src, to) {
 }
 
 let max = 100;
-let target = coordinateRanges.central_europe;
+let region = coordinateRanges.central_europe;
 const alt = 1200;
 function capture(count = 0) {
   if (count >= max) {
     return;
   }
-  const fname = 'images/' + padleft(count) + '.png';
-  const [lat, long] = randcoord(target.src, target.to);
-  mapCap(lat, long, 1200, fname, () => {
+  const [lat, long] = randcoord(region.src, region.to);
+  const fname = `images/${lat.replace(/\./g, '\'')}_${long.replace(/\./g, '\'')}.png`;
+  mapCap(lat, long, alt, fname, () => {
     console.log(`captured ${fname}`);
-    capture(count + 1)
+    capture(count + 1);
   });
 }
 
