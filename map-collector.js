@@ -53,7 +53,6 @@ function capture(count = 0) {
   const [lat, long] = randcoord(region.src, region.to);
   const fname = `images/${lat.replace(/\./g, '\'')}_${long.replace(/\./g, '\'')}.png`;
   mapCap(lat, long, alt, fname, () => {
-    console.log(`captured ${fname}`);
     capture(count + 1);
   });
 }

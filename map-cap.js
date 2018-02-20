@@ -29,7 +29,10 @@ function mapCap(lat, long, alt, fname, callback=defaultCallback, test_collect=fa
     .click(satButton)
     .wait(2000)
     .screenshot(`./${fname}`, {x:100, y:100, width:900, height:455})
-    .end(callback)
+    .end(() => {
+      console.log(`captured "${fname}"`);
+      callback();
+    })
     .catch(error => {
       console.error('Something failed:', error);
       callback();
