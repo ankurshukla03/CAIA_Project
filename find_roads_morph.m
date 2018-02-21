@@ -1,5 +1,7 @@
 function [img] = find_roads_morph(mimg)
+% keep size odd.
 strel_size = 5;
+assert(mod(strel_size, 2) == 1);
 ses = structuring_elems(strel_size);
 
 img = dir_morph(mimg, ses, strel_size, 'erode');
@@ -14,7 +16,7 @@ end
 function img = dir_morph(img, ses, strel_size, op)
     offset = (strel_size - 1)/2;
     % do not modify this
-    tmp_img = padarray(img, [offset, offset], 0, 'both');
+    tmp_img = img;
     % we modify *this*
     out_img = tmp_img;
     progressbar(sprintf('%s i', op),'j');
@@ -22,30 +24,29 @@ function img = dir_morph(img, ses, strel_size, op)
         for j = offset+1:(size(tmp_img,2)-offset)
             % compute sd gray value
             vals = zeros(numel(ses), 1);
+            sub_img = tmp_img(i-offset:i+offset,j-offset:j+offset);
             for k = 1:numel(ses)
                 se = ses{k};
-                sub_img = tmp_img(i-offset:i+offset,j-offset:j+offset);
                 vals(k) = strel_stdev(sub_img, se);
             end
-            % morph i,j where sd is minimal
+            % morph ONLY i,j where sd is minimal
             [~, idx] = min(vals);
-            sub_img = tmp_img(i-offset:i+offset,j-offset:j+offset);
             switch op
                 case 'dilate'
-                    out_img(i-offset:i+offset,j-offset:j+offset) = imdilate(sub_img, ses{idx});
+                    sub_img = imdilate(sub_img, ses{idx});
                 case 'erode'
-                    out_img(i-offset:i+offset,j-offset:j+offset) = imerode(sub_img, ses{idx});
+                    sub_img = imerode(sub_img, ses{idx});
                 otherwise
                     warning('Unexpected morph type.');
             end
+            out_img(i,j) = sub_img(offset+1, offset+1);
             progressbar([], j/size(tmp_img,2));
         end
         progressbar(i/size(tmp_img,1),[]);
     end
     progressbar(1);
-    % trim output.
-    img = out_img(offset:end-offset, offset:end-offset);
-    img = contrast_stretch(img);
+    % contrast stretch output.
+    img = contrast_stretch(out_img);
 end
 
 function stretched = contrast_stretch(img)
