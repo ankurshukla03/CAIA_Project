@@ -18,6 +18,10 @@ var coordinateRanges = {
   'china': {
     src: [41.028377, 83.866089],
     to: [24.694435, 118.477787]
+  },
+  'india': {
+    src: [29.572219, 76.932607],
+    to: [9.112917, 77.899404]
   }
 };
 
@@ -44,7 +48,7 @@ function randcoord(src, to) {
 }
 
 let max = 100;
-let region = coordinateRanges.central_europe;
+let region = coordinateRanges.brazil;
 const alt = 1200;
 function capture(count = 0) {
   if (count >= max) {
