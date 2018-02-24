@@ -1,4 +1,4 @@
-const debug = false;
+const debug = true;
 const Nightmare = require('nightmare');
 
 const burgerButton = '.searchbox-hamburger';
@@ -15,9 +15,16 @@ function defaultCallback() {
   console.log('screenshot completed');
 }
 
-function mapCap(lat, long, alt, fname, callback=defaultCallback, test_collect=false) {
-  let _alt = test_collect ? `${alt}z` : `${alt}m`; // z is plain, m is satellite
-  const url = `https://www.google.se/maps/@${lat},${long},${_alt}${test_collect ? '' : '/data=!3m1!1e3?hl=en'}`;
+function mapCap(lat, long, alt, fname, callback=defaultCallback, collect_test=false) {
+  if (collect_test) {
+    cap_both(lat, long, alt, fname, callback);
+  } else {
+    cap_only_satellite(lat, long, alt, fname, callback);
+  }
+}
+
+function cap_only_satellite(lat, long, alt, fname, callback) {
+  const url = `https://www.google.hr/maps/@${lat},${long},${alt}m$/data=!3m1!1e3?hl=en`;
   const nightmare = Nightmare({show: debug});
   return (nightmare
     .viewport(1100, 700)
@@ -29,6 +36,43 @@ function mapCap(lat, long, alt, fname, callback=defaultCallback, test_collect=fa
     .click(satButton)
     .wait(2000)
     .screenshot(`./${fname}`, {x:100, y:100, width:900, height:455})
+    .end(() => {
+      console.log(`captured "${fname}"`);
+      callback();
+    })
+    .catch(error => {
+      console.error('Something failed:', error);
+      callback();
+    })
+  );
+};
+
+// clicks the widget minimap and captures the plain view.
+function cap_both(lat, long, alt, fname, callback) {
+  const url = `https://www.google.hr/maps/@${lat},${long},${alt}m/data=!3m1!1e3?hl=en`;
+  const fnameTest = fname.replace(/\.png/g, '_TEST.png');
+  const nightmare = Nightmare({show: debug});
+  return (nightmare
+    .viewport(1100, 700)
+    .goto(url)
+    .wait(5000)
+    // turn off labels
+    .wait(burgerButton)
+    .click(burgerButton)
+    .wait(satButton)
+    .click(satButton)
+    .wait(2000)
+    .screenshot(`./${fname}`, {x:100, y:100, width:900, height:455})
+    // switch to plain map view
+    .click('.widget-minimap-shim')
+    .wait(2000)
+    // turn off labels (again)
+    .wait(burgerButton)
+    .click(burgerButton)
+    .wait(satButton)
+    .click(satButton)
+    .wait(2000)
+    .screenshot(`./${fnameTest}`, {x:100, y:100, width:900, height:455})
     .end(() => {
       console.log(`captured "${fname}"`);
       callback();

@@ -21,17 +21,9 @@ var coordinateRanges = {
   },
   'india': {
     src: [29.572219, 76.932607],
-    to: [9.112917, 77.899404]
+	to: [9.112917, 77.899404]
   }
 };
-
-function padleft(val) {
-  var ret = String(val);
-  while (ret.length < 4) {
-    ret = `0${ret}`;
-  }
-  return ret;
-}
 
 function range(val) {
   val = val.sort();
@@ -47,8 +39,9 @@ function randcoord(src, to) {
   return [randLat, randLong];
 }
 
+let collect_test = true;
 let max = 100;
-let region = coordinateRanges.brazil;
+let region = coordinateRanges.central_europe;
 const alt = 1200;
 function capture(count = 0) {
   if (count >= max) {
@@ -58,7 +51,7 @@ function capture(count = 0) {
   const fname = `images/${lat.replace(/\./g, '\'')}_${long.replace(/\./g, '\'')}.png`;
   mapCap(lat, long, alt, fname, () => {
     capture(count + 1);
-  });
+  }, collect_test);
 }
 
 capture();

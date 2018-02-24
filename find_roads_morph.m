@@ -1,6 +1,4 @@
-function [img] = find_roads_morph(mimg)
-% keep size odd.
-strel_size = 5;
+function [img] = find_roads_morph(mimg, strel_size)
 assert(mod(strel_size, 2) == 1);
 ses = structuring_elems(strel_size);
 
@@ -19,7 +17,7 @@ function img = dir_morph(img, ses, strel_size, op)
     tmp_img = img;
     % we modify *this*
     out_img = tmp_img;
-    progressbar(sprintf('%s i', op),'j');
+    progressbar(sprintf('%s i, size: %d', op, strel_size),'j');
     for i = offset+1:(size(tmp_img,1)-offset)
         for j = offset+1:(size(tmp_img,2)-offset)
             % compute sd gray value
@@ -49,6 +47,7 @@ function img = dir_morph(img, ses, strel_size, op)
     img = contrast_stretch(out_img);
 end
 
+%% contrast strech
 function stretched = contrast_stretch(img)
 vmin = min(img(:));
 vmax = max(img(:));
@@ -59,6 +58,9 @@ end
 
 %% stdev over some se
 function stdev = strel_stdev(im, se)
+    assert(all(size(im) == size(se)), ...
+        sprintf("im size %d,%d !== se size %d,%d", ...
+            size(im,1), size(im,2), size(se,1), size(se,2)));
     vals = zeros(size(se,1), 1);
     for i=1:size(im,1)
         for j=1:size(im,2)
@@ -72,9 +74,10 @@ end
 
 %% create four directional se's
 function [ses] = structuring_elems(size)
-    % structuring elements, these should be 5x5.
+    % structuring elements, these should be odd
+    offset = (size - 1)/2;
     horiz = strel('line', size, 0);
-    horiz = padarray(horiz.Neighborhood, 2);
+    horiz = padarray(horiz.Neighborhood, offset);
     vert = horiz';
     % diagonals
     r_diag = eye(size);
