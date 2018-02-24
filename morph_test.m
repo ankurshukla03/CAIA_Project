@@ -1,5 +1,6 @@
 close all;
-img = imread('imgs/richmond.png');
+%img = imread('imgs/richmond.png');
+img = imread('train.png');
 g_img = rgb2gray(img);
 
 % this takes some time to run

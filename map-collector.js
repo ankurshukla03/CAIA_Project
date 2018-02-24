@@ -20,8 +20,8 @@ var coordinateRanges = {
     to: [24.694435, 118.477787]
   },
   'india': {
-    src: [29.572219, 76.932607],
-	to: [9.112917, 77.899404]
+    src: [31.530811, 75.809446],
+	to: [26.905434, 79.019791]
   }
 };
 
@@ -41,8 +41,8 @@ function randcoord(src, to) {
 
 let collect_test = true;
 let max = 100;
-let region = coordinateRanges.central_europe;
-const alt = 1200;
+let region = coordinateRanges.india;
+const alt = 800;
 function capture(count = 0) {
   if (count >= max) {
     return;

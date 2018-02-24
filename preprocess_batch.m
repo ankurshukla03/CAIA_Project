@@ -13,6 +13,7 @@ path = 'images/';
 % progressbar('imgs i');
 for fi=imgs'
     if ~isempty(regexp(fi.name, '_TEST', 'match'))
+    %if ~isempty(regexp(fi.name, 'TEST', 'split'))
         train_name = strcat(path, fi.name(1:21), '.png');
         test_name = strcat(path, fi.name);
         
