@@ -10,8 +10,8 @@ data_size = length(imgs)/2;
 in_data = [];
 test_data = [];
 path = 'images/';
-% i = 1;
-% progressbar('imgs i');
+i = 1;
+progressbar('imgs i');
 for fi=imgs'
     if ~isempty(regexp(fi.name, '_TEST', 'match'))
         train_name = strcat(path, fi.name(1:21), '.png');
@@ -29,8 +29,8 @@ for fi=imgs'
         [p, t] = preprocess_single_rgb(train_img, test_img);
         in_data = [in_data, p]; %#ok
         test_data = [test_data,t]; %#ok
-%         i = i + 1;
-%         progressbar(i/data_size);
+        i = i + 1;
+        progressbar(i/data_size);
     end
 end
 

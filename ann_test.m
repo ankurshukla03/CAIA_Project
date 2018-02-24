@@ -6,7 +6,7 @@ p = in_data;
 t = test_data;
 
 % init
-net = newff(p, t, [5], {'tansig' 'purelin'}, 'trainrp', '', 'mse', {}, {}, '');
+net = newff(p, t, [10], {'tansig' 'purelin'}, 'trainrp', '', 'mse', {}, {}, '');
 net = init(net);
 
 % train
