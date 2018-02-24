@@ -41,8 +41,8 @@ function randcoord(src, to) {
 
 let collect_test = true;
 let max = 100;
-let region = coordinateRanges.india;
-const alt = 800;
+let region = coordinateRanges.central_europe;
+const alt = 900;
 function capture(count = 0) {
   if (count >= max) {
     return;
