@@ -30,6 +30,7 @@ function cap_only_satellite(lat, long, alt, fname, callback) {
     .viewport(1100, 700)
     .goto(url)
     .wait(5000)
+    .inject('css', './hide-styles.css')
     .wait(burgerButton)
     .click(burgerButton)
     .wait(satButton)
@@ -56,6 +57,7 @@ function cap_both(lat, long, alt, fname, callback) {
     .viewport(1100, 700)
     .goto(url)
     .wait(5000)
+    .inject('css', './hide-styles.css')
     // turn off labels
     .wait(burgerButton)
     .click(burgerButton)

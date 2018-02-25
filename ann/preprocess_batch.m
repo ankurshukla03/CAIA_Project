@@ -10,11 +10,10 @@ data_size = length(imgs)/2;
 in_data = [];
 test_data = [];
 path = 'images/';
-% i = 1;
-% progressbar('imgs i');
+i = 1;
+progressbar('imgs i');
 for fi=imgs'
     if ~isempty(regexp(fi.name, '_TEST', 'match'))
-        train_name = strcat(path, fi.name(1:21), '.png');
         % get the coordinates
         name = regexp(fi.name, '_TEST', 'split');
         name = name{1};
@@ -26,13 +25,15 @@ for fi=imgs'
         train_img = imread(train_name);
         test_img = plain_to_test(imread(test_name));
         % input and target
-        [p, t] = preprocess_single_rgb(train_img, test_img);
+%         [p, t] = preprocess_single_rgb(train_img, test_img);
+        [p, t] = preprocess_neighbor_rgb(train_img, test_img);
         in_data = [in_data, p]; %#ok
         test_data = [test_data,t]; %#ok
-%         i = i + 1;
-%         progressbar(i/data_size);
+        i = i + 1;
+        progressbar(i/data_size);
     end
 end
+progressbar(1);
 
 % save the data to a mat file for loading later
 save('sat_data.mat', 'in_data', 'test_data');

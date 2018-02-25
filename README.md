@@ -1,7 +1,13 @@
 # CAIA 2 Project Repo
 
-Keep images out.
+Various attempts at road segmentation.
 
-## Logs
-- 18-2-2018: All Matlab for now, no need for python yet. `find_roads_mthresh.m` performs a multithreshold on images, one of those multithresh's is the roads just a trick to select it.
+## Folders
 
+- `/ann`: ANN segmentation, scripts for training and testing.
+- `/collector`: satellite image aggregator.
+- `/match`: matching line segments
+- `/morph`: directional morph
+- `/mthresh`: simple multi-threshold segmentation.
+
+Each folder's main script is titled `[foldername]_test.m`. `find_roads_[foldername].m` is the main function which `..._test` executes.
