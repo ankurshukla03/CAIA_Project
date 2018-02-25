@@ -1,0 +1,6 @@
+#consent-bump, #watermark {
+  display: none;
+}
+#scene {
+  z-index: 100;
+}
