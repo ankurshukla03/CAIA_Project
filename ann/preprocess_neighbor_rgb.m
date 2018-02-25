@@ -16,9 +16,16 @@ function [train, test] = preprocess_neighbor_rgb(img, test_img)
             sub_r = get_1d_range(r, i, j, offset);      
             sub_g = get_1d_range(g, i, j, offset);            
             sub_b = get_1d_range(b, i, j, offset);
-            
-            train(:, end+1) = [sub_r sub_g sub_b]'; %#ok
+            input = normalize([sub_r sub_g sub_b]');
+            train(:, end+1) = input; %#ok
             test(:, end+1) = [test_img(i,j)]; %#ok
         end
     end
+end
+
+% normalize pixel values between 0 and 1.
+function n = normalize(A) 
+    A = double(A);
+    n = A - min(A(:));
+    n = n ./ max(n(:));
 end

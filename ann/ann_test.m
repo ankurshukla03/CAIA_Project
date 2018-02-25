@@ -7,7 +7,7 @@ t = test_data;
 
 % init
 net = newff(p, t, [10], {'tansig' 'logsig'}, 'trainrp', '', 'mse', {}, {}, '');
-% net.performFcn = 'rmse';
+% % net.performFcn = 'rmse';
 net = init(net);
 
 % train
