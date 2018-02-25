@@ -35,7 +35,7 @@ function cap_only_satellite(lat, long, alt, fname, callback) {
     .wait(satButton)
     .click(satButton)
     .wait(2000)
-    .screenshot(`./${fname}`, {x:100, y:100, width:550, height:550})
+    .screenshot(`./${fname}`, {x:100, y:100, width:500, height:400})
     .end(() => {
       console.log(`captured "${fname}"`);
       callback();
@@ -62,7 +62,7 @@ function cap_both(lat, long, alt, fname, callback) {
     .wait(satButton)
     .click(satButton)
     .wait(2000)
-    .screenshot(`./${fname}`, {x:100, y:100, width:550, height:550})
+    .screenshot(`./${fname}`, {x:100, y:100, width:500, height:400})
     // switch to plain map view
     .click('.widget-minimap-shim')
     .wait(2000)
@@ -72,7 +72,7 @@ function cap_both(lat, long, alt, fname, callback) {
     .wait(satButton)
     .click(satButton)
     .wait(2000)
-    .screenshot(`./${fnameTest}`, {x:100, y:100, width:550, height:550})
+    .screenshot(`./${fnameTest}`, {x:100, y:100, width:500, height:400})
     .end(() => {
       console.log(`captured "${fname}"`);
       callback();
