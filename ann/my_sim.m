@@ -6,12 +6,12 @@ function map_estimation = my_sim(net, image)
     end
 end
 
-function map_estimation = my_sim_single(net, image)
-    cols = size(image, 1);
-    rows = size(image, 2);
-    red = image(:,:,1);
-    green = image(:,:,2);
-    blue = image(:,:,3);
+function map_estimation = my_sim_single(net, img)
+    cols = size(img, 1);
+    rows = size(img, 2);
+    red = img(:,:,1);
+    green = img(:,:,2);
+    blue = img(:,:,3);
     map_estimation = zeros(cols, rows);
     progressbar('i','j');
     for i=1:rows
@@ -24,17 +24,17 @@ function map_estimation = my_sim_single(net, image)
     end
 end
 
-function map_estimation = my_sim_neighbors(net, image, ksize)
+function map_estimation = my_sim_neighbors(net, img, ksize)
     offset = (ksize - 1) / 2;
-    cols = size(image, 1);
-    rows = size(image, 2);
-    red = image(:,:,1);
-    green = image(:,:,2);
-    blue = image(:,:,3);
+    cols = size(img, 1);
+    rows = size(img, 2);
+    red = img(:,:,1);
+    green = img(:,:,2);
+    blue = img(:,:,3);
     map_estimation = zeros(cols, rows);
     progressbar('i','j');
-    for i=offset+1:rows-offset
-        for j=offset+1:cols-offset
+    for i=offset+1:(size(img, 1)-offset)
+        for j=offset+1:(size(img,2)-offset)
             r_in = get_1d_range(red,   i,j, offset);
             g_in = get_1d_range(green, i,j, offset);
             b_in = get_1d_range(blue,  i,j, offset);
