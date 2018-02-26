@@ -6,12 +6,11 @@ p = in_data;
 t = test_data;
 
 % init
-net = newff(p, t, [10], {'tansig' 'logsig'}, 'trainrp', '', 'mse', {}, {}, '');
-% % net.performFcn = 'rmse';
+net = newff(p, t, [5], {'tansig' 'logsig'}, 'trainrp', '', 'mse', {}, {}, 'dividerand');
 net = init(net);
 
 % train
 [trained_net, stats] = train(net, p, t);
 
 % uncomment to save nn model for later use
-% save trained_net;
+% save trained_net_neihbors;
