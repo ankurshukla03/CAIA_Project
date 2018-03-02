@@ -1,4 +1,4 @@
-function map_estimation = my_sim(net, img)
+function map_estimation = my_sim_precise(net, img)
     if net.inputs{1}.size == 27
         map_estimation = my_sim_neighbors(net, img, 3);
     elseif trained_net.inputs{1}.size == 3

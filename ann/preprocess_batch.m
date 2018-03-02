@@ -22,11 +22,11 @@ for fi=imgs'
         test_name = strcat(path, fi.name);
         
         % open the images and grab the rgb values
-        train_img = imread(train_name);
+        train_img = plain_to_train(imread(train_name));
         test_img = plain_to_test(imread(test_name));
         % input a nd target
 %         [p, t] = preprocess_single_rgb(train_img, test_img);
-        [p, t] = preprocess_neighbor_rgb(train_img, test_img);
+        [p, t] = preprocess_neighbor_rgb(train_img, test_img, 1000);
         in_data = [in_data, p]; %#ok
         test_data = [test_data,t]; %#ok
         i = i + 1;
@@ -35,5 +35,6 @@ for fi=imgs'
 end
 progressbar(1);
 
-% save the data to a mat file for loading later
-save('sat_data.mat', 'in_data', 'test_data');
+%% save the data to a mat file for loading later
+'saving...'
+save('sat_data.mat', 'in_data', 'test_data', '-v7.3');
