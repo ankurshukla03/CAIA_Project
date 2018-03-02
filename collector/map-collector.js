@@ -21,11 +21,15 @@ var coordinateRanges = {
   },
   'india': {
     src: [31.530811, 75.809446],
-	to: [26.905434, 79.019791]
+	  to: [26.905434, 79.019791]
   },
   'australia': {
     src: [-22.867184, 130.855963],
-	to: [-30.021417, 147.203619]
+    to: [-30.021417, 147.203619]
+  },
+  albuquerque: {
+    src: [35.216022, -106.744998],
+    to: [35.042346, -106.501000]
   }
 };
 
@@ -45,8 +49,8 @@ function randcoord(src, to) {
 
 let collect_test = true;
 let max = 100;
-let region = coordinateRanges.central_europe;
-const alt = 900;
+let region = coordinateRanges.albuquerque;
+const alt = 550;
 function capture(count = 0) {
   if (count >= max) {
     return;
