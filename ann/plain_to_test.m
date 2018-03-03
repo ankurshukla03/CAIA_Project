@@ -1,5 +1,5 @@
 % Test image preprocessing
-function out = plain_to_test(img)
+function [out, roads_exist] = plain_to_test(img)
     % We need to mask a very specific shade of yellow
     red = img(:,:,1); green = img(:,:,2); blue = img(:,:,3);
     mred = red == 255; 
@@ -11,5 +11,8 @@ function out = plain_to_test(img)
     blue(final_mask) = 255;
     img = cat(3, red, green, blue);
     
-    out = rgb2gray(img) >= 250;
+    thresh = 250;
+    img = rgb2gray(img);
+    roads_exist = sum(img(:) > thresh) > 0;
+    out = img >= thresh;
 end
