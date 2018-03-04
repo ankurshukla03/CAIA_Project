@@ -1,38 +1,41 @@
 function [img] = find_roads_match(mimg)
     r = 10;
-    gap_thresh = 5;
+    gap_thresh = 2;
     stride = 2;
-%     offset = r/2;
     img = imbinarize(mimg);
+    width = size(img, 2);
+    height = size(img, 1);
     figure(3)
     imshow(img);
     matched = zeros(size(img));
-    progressbar('x', 'y', 'angle');
-    for x=1:stride:size(img, 2)
-       for y=1:stride:size(img, 1)
-           for angle = -90:3:90
-               if img(x,y) == 1
-                    nx = round(x - r * cos(angle * pi / 180));
-                    ny = round(y - r * sin(angle * pi / 180));
-                    if nx <= 0 || ny <= 0 || nx > size(img,2) || ny > size(img,1) || img(nx,ny) ~= 1
-                        continue;
-                    end
+    progressbar('angle', 'x', 'y');
+    for angle = -90:2:90
+        for x=1:stride:width
+           for y=1:stride:height
+               if img(y,x) == 1
+                    nx = clamp(round(x - r * cos(angle * pi / 180)), width);
+                    ny = clamp(round(y - r * sin(angle * pi / 180)), height);
                     xs = [x, nx];
                     ys = [y, ny];
                     profile = improfile(img, xs, ys);
+                    len_p = length(profile);
                     [one_count, ~, max_gap] = count_segments(profile);
-                    % at least 60% ones and no gaps > gapthresh
-                    if one_count > r * 0.75 && max_gap <= gap_thresh
+                    % at least 75% ones and no gaps > gapthresh
+                    if one_count > len_p * 0.75 && max_gap <= gap_thresh
                         matched = line_segment_draw(matched, xs, ys);
-                        figure(2)
-                        imshow(matched);
                     end
                end
-               progressbar([], [], (angle+90)/180);
-           end % end angle
-           progressbar([], y/size(img,2), []);
+               progressbar([], [], y/height);
+           end
+           progressbar([], x/width, []);
        end % end j
-       progressbar(x/size(img,1), [], []);
-    end % end i
+       progressbar((angle+90)/180, [], []);
+       figure(2),
+       imshow(matched);
+    end % end angle
     img = matched;
+end
+
+function val = clamp(sample, maximum)
+    val = min(maximum, max(sample, 1));
 end

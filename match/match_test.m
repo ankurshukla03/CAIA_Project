@@ -1,5 +1,5 @@
 close all;
-img = imread('imgs/02.png');
+img = imread('mt02.jpg');
 g_img = rgb2gray(img);
 
 g_img = imresize(g_img, .20, 'nearest');
