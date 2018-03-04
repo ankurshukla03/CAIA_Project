@@ -1,16 +1,17 @@
 function [img, roads] = find_roads_mthresh(mimg)
-%% smooth
+% to grayscale
+if size(mimg,3) > 1
+   mimg = rgb2gray(mimg); 
+end
+
+% smooth
 img = imsharpen(mimg);
 
-%% thresh
+% thresh
 mthresh = multithresh(img, 3); % separates into 4 parts
 img = imquantize(img, mthresh);
 
-%% morph 
-% se = strel('disk', 3);
-% img = imclose(img, se);
-
-%% find roads
+% find comps
 comps = cell(4,1);
 for i=1:4
    comps{i} = img == i;
@@ -19,11 +20,5 @@ for i=1:4
    title(sprintf('%d', i));
 end
 
-%pick region with the fewest components AND widest?
-
-
-%% region find
-% comps = bwconncomp(img);
-% props = regionprops(comps, 'BoundingBox', 'Eccentricity');
 roads = comps;
 end

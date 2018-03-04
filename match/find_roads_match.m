@@ -1,8 +1,10 @@
-function [img] = find_roads_match(mimg)
-    r = 10;
+function [img] = find_roads_match(mimg, r)
     gap_thresh = 2;
     stride = 2;
-    img = imbinarize(mimg);
+    img = mimg;
+    if size(mimg,3) > 1
+        img = imbinarize(mimg);
+    end
     width = size(img, 2);
     height = size(img, 1);
     figure(3)
@@ -30,7 +32,7 @@ function [img] = find_roads_match(mimg)
            progressbar([], x/width, []);
        end % end j
        progressbar((angle+90)/180, [], []);
-       figure(2),
+       figure(10),
        imshow(matched);
     end % end angle
     img = matched;
