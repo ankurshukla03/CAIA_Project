@@ -24,7 +24,8 @@ function mapCap(lat, long, alt, fname, callback=defaultCallback, collect_test=fa
 }
 
 function cap_only_satellite(lat, long, alt, fname, callback) {
-  const url = `https://www.google.hr/maps/@${lat},${long},${alt}m$/data=!3m1!1e3?hl=en`;
+  const url = `https://www.google.se/maps/@${lat},${long},${alt}m/data=!3m1!1e3?hl=en`;
+  console.log(url);
   const nightmare = Nightmare({show: debug});
   return (nightmare
     .viewport(1100, 700)
@@ -50,7 +51,7 @@ function cap_only_satellite(lat, long, alt, fname, callback) {
 
 // clicks the widget minimap and captures the plain view.
 function cap_both(lat, long, alt, fname, callback) {
-  const url = `https://www.google.hr/maps/@${lat},${long},${alt}m/data=!3m1!1e3?hl=en`;
+  const url = `https://www.google.se/maps/@${lat},${long},${alt}m/data=!3m1!1e3?hl=en`;
   const fnameTest = fname.replace(/\.png/g, '_TEST.png');
   const nightmare = Nightmare({show: debug});
   return (nightmare
@@ -91,7 +92,7 @@ if (process.argv.length > 2) {
   let lat  = process.argv[2];
   let long = process.argv[3];
   let alt  = process.argv[4];
-  let fname = process.argv[5];
+  let fname = process.argv[5] || 'capture.png';
   mapCap(lat, long, alt, fname);
 } else {
   module.exports = mapCap;
